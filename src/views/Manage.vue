@@ -2,7 +2,7 @@
 <template>
     
     <div class="flex justify-end mt-3">
-        <button @click="hideShowProductDialog"  class=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+        <button @click="hideShowProductDialog('post')"  class=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
             Add Product
         </button>
     </div>
@@ -26,7 +26,7 @@
                 <!-- <td class="border px-8 py-4 flex justify-center"><img class="w-[60px] h-[60px]" :src='product.images ' alt=""></td> -->
                 <td class="border px-8 py-4">
                     <div class="flex">
-                        <button @click="{hideShowProductDialog();setPostId(product.id)}" class="m-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                        <button @click="{hideShowProductDialog('update');setPostId(product.id)}" class="m-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                             Edit
                         </button>
                         <button @click="{HideShowDelete(); setPostId(product.id)}" class="m-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">
@@ -105,10 +105,15 @@
                         </label>
                     </div>
                     <div class="container p-4">
-                        <select v-model="category_id" name="" id="">
-                            <option value="1">Drink</option>
-                            <option value="2">Food</option>
-                        </select>
+                        <label class="block">
+                            <span class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-white">
+                                Category
+                            </span>
+                            <select v-model="category_id" name="" id="">
+                                <option value="1">Drink</option>
+                                <option value="2">Food</option>
+                            </select>
+                        </label>
                     </div>
                     <!-- <div class="container p-4">
                         <label class="block">
@@ -118,11 +123,11 @@
                             <input  v-on:change="onChangeImg" type="file"  class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"  />
                         </label>
                     </div> -->
-                    <div class="container p-4">
-                        <button  @click="postProduct" class=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                    <div class="container p-4" >
+                        <button  v-if="clickPost" @click="postProduct" class=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                             Post Product
                         </button>
-                        <button @click="handleUpdateProduct"  class=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                        <button v-else-if="clickUpdate" @click="handleUpdateProduct"  class=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                             Update Product
                         </button>
                     </div>
@@ -154,6 +159,8 @@ import { useRouter } from 'vue-router';
             const products = ref([]);
             const productId = ref(0);
             
+            const clickPost = ref(false);
+            const clickUpdate = ref(false);
             
             const title = ref('');
             const description = ref('');
@@ -173,7 +180,16 @@ import { useRouter } from 'vue-router';
             const HideShowDelete = () =>{
                 showDelete.value = !showDelete.value;
             }
-            const hideShowProductDialog = () =>{
+            const hideShowProductDialog = (action) =>{
+                if(action === 'update'){
+                    clickPost.value = false;
+                    clickUpdate.value = true;
+                }
+                else{
+                    clickPost.value = true;
+                    clickUpdate.value = false;
+                }
+                
                 showProductDialog.value = !showProductDialog.value;
             }
 
@@ -195,6 +211,7 @@ import { useRouter } from 'vue-router';
                 }
             }
             const postProduct = async (e) =>{
+                
                 e.preventDefault();
                 try{
                     await store.dispatch('postProduct', {
@@ -213,6 +230,7 @@ import { useRouter } from 'vue-router';
             }
 
             const handleUpdateProduct = async (e) =>{
+
                 e.preventDefault();
                 let form = {
                         title: title.value,
@@ -231,7 +249,7 @@ import { useRouter } from 'vue-router';
                 }
             }
 
-            return {products,title, productId, description, price, images, category_id, showDelete, showProductDialog,onChangeImg, HideShowDelete, hideShowProductDialog, postProduct, handleDelete, setPostId, handleUpdateProduct};
+            return {products,title, productId, description, price, images, category_id, showDelete, showProductDialog, clickPost, clickUpdate,onChangeImg, HideShowDelete, hideShowProductDialog, postProduct, handleDelete, setPostId, handleUpdateProduct};
         }
     }
 </script>
