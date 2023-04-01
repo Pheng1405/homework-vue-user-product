@@ -38,3 +38,29 @@ export const DeleteProduct = async (productId) => {
   const response = await axios.delete(`${API_URL}/product/${productId}`);
   return response.data;
 }
+
+
+export const GetAllCategory = async () =>{
+  const response = await axios.get(`${API_URL}/categories`);
+  return response.data;
+}
+
+export const PostCategory = async (formData) =>{
+  const response = await axios.post(`${API_URL}/category`, formData);
+  return response.data;
+}
+
+export const UpdateCategory = async (data) =>{
+  console.log(data)
+  const response = await axios.put(`${API_URL}/category/${data.postId}`, data.form);
+  
+  return response.data;
+}
+
+export const DeleteCategory = async (postId) =>{
+  const response = await axios.delete(`${API_URL}/category/${postId}`);
+  return response.data;
+}
+
+
+

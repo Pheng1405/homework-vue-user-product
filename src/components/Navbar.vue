@@ -23,11 +23,12 @@
             </li>
 
             <li class="p-2" v-if="userCredential?.is_admin">
-                <RouterLink to="/products">Manage</RouterLink>
+                <RouterLink to="/products">Product</RouterLink>
+            </li>
+            <li class="p-2" v-if="userCredential?.is_admin">
+                <RouterLink to="/categories">Category</RouterLink>
             </li>
         </ul>
-
-        
 
         </div>
     </nav>

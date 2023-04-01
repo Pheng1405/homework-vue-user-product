@@ -3,7 +3,7 @@
     
     <div class="flex justify-end mt-3">
         <button @click="hideShowProductDialog('post')"  class=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-            Add Product
+            Add Category
         </button>
     </div>
     <div class="flex justify-center">
@@ -11,25 +11,19 @@
             <tr>
                 <th class="bg-blue-100 border text-left px-8 py-4">ID</th>
                 <th class="bg-blue-100 border text-left px-8 py-4">PRODUCT NAME</th>
-                <th class="bg-blue-100 border text-left px-8 py-4">PRODUCT PRICE</th>
-                <th class="bg-blue-100 border text-left px-8 py-4">PRODUCT DESCRIPTION</th>
-                <th class="bg-blue-100 border text-left px-8 py-4">PRODUCT CATEGORY</th>
                 <!-- <th class="bg-blue-100 border text-left px-8 py-4">PRODUCT IMAGE</th> -->
                 <th class="bg-blue-100 border text-left px-8 py-4">ACTION</th>
             </tr>
-            <tr v-for="product in products">
-                <td class="border px-8 py-4">{{ product.id }}</td>
-                <td class="border px-8 py-4">{{ product.title }}</td>
-                <td class="border px-8 py-4">{{ product.price }}</td>
-                <td class="border px-8 py-4">{{ product.description.substring(0,80) }}...</td>
-                <td class="border px-8 py-4">{{ product.category }}</td>
+            <tr v-for="category in categories">
+                <td class="border px-8 py-4">{{ category.id }}</td>
+                <td class="border px-8 py-4">{{ category.name }}</td>
                 <!-- <td class="border px-8 py-4 flex justify-center"><img class="w-[60px] h-[60px]" :src='product.images ' alt=""></td> -->
                 <td class="border px-8 py-4">
                     <div class="flex">
-                        <button @click="{hideShowProductDialog('update');setPostId(product.id)}" class="m-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                        <button @click="{hideShowProductDialog('update');setPostId(category.id)}" class="m-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
                             Edit
                         </button>
-                        <button @click="{HideShowDelete(); setPostId(product.id)}" class="m-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">
+                        <button @click="{HideShowDelete(); setPostId(category.id)}" class="m-1 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full">
                             Delete
                         </button>
                     </div>
@@ -54,9 +48,9 @@
                     </svg>
                     </div>
                     <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                    <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Delete Product?</h3>
+                    <h3 class="text-base font-semibold leading-6 text-gray-900" id="modal-title">Delete category?</h3>
                     <div class="mt-2">
-                        <p class="text-sm text-gray-500">Are you sure you want to deactivate your account? All of your data will be permanently removed.</p>
+                        <p class="text-sm text-gray-500">Are you sure you want to delete this category? All of your data will be permanently removed.</p>
                     </div>
                     </div>
                 </div>
@@ -88,47 +82,13 @@
                             <input  v-model="title" type="text"  class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"  />
                         </label>
                     </div>
-                    <div class="container p-4">
-                        <label class="block">
-                            <span class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-white">
-                                Description
-                            </span>
-                            <textarea  v-model="description" type="text"  class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1" ></textarea>
-                        </label>
-                    </div>
-                    <div class="container p-4">
-                        <label class="block">
-                            <span class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-white">
-                                Price
-                            </span>
-                            <input  v-model="price" type="text"  class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"  />
-                        </label>
-                    </div>
-                    <div class="container p-4">
-                        <label class="block">
-                            <span class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-white">
-                                Category
-                            </span>
-                            <select v-model="category_id" name="" id="">
-                                <option value="1">Drink</option>
-                                <option value="2">Food</option>
-                            </select>
-                        </label>
-                    </div>
-                    <!-- <div class="container p-4">
-                        <label class="block">
-                            <span class="after:content-['*'] after:ml-0.5 after:text-red-500 block text-sm font-medium text-white">
-                                File
-                            </span>
-                            <input  v-on:change="onChangeImg" type="file"  class="mt-1 px-3 py-2 bg-white border shadow-sm border-slate-300 placeholder-slate-400 focus:outline-none focus:border-sky-500 focus:ring-sky-500 block w-full rounded-md sm:text-sm focus:ring-1"  />
-                        </label>
-                    </div> -->
+                    
                     <div class="container p-4" >
-                        <button  v-if="clickPost" @click="postProduct" class=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                            Post Product
+                        <button  v-if="clickPost" @click="postCategory" class=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                            Post Category
                         </button>
-                        <button v-else-if="clickUpdate" @click="handleUpdateProduct"  class=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-                            Update Product
+                        <button v-else-if="clickUpdate" @click="handleUpdateCategory"  class=" bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+                            Update Category
                         </button>
                     </div>
                 </form>
@@ -145,7 +105,7 @@
 
 <script>
 import { onMounted, ref } from 'vue';
-import { getAllProducts } from '../utils/api';
+import {  GetAllCategory } from '../utils/api';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 
@@ -156,21 +116,19 @@ import { useRouter } from 'vue-router';
             const router = useRouter();
             const showDelete = ref(false);
             const showProductDialog    = ref(false);
-            const products = ref([]);
+            const categories = ref([]);
             const productId = ref(0);
             
             const clickPost = ref(false);
             const clickUpdate = ref(false);
             
             const title = ref('');
-            const description = ref('');
-            const price = ref(0);
-            const images = ref();
-            const category_id = ref(0);
-            const file = ref();
+
 
             onMounted(async() => {
-                products.value = await getAllProducts();
+                categories.value = await GetAllCategory();
+                categories.value  = categories.value.data;
+                // console.log(categories.value.data)
             });
 
             const setPostId = (e) =>{
@@ -194,33 +152,28 @@ import { useRouter } from 'vue-router';
             }
 
             const onChangeImg = e =>{
-                file.value = e.target.files[0];
+                // file.value = e.target.files[0];
             }
 
-            let formData = new FormData();
-            formData.append('images', file.value);
+            // let formData = new FormData();
+            // formData.append('images', file.value);
 
             const handleDelete = async () =>{
                 try{
-                    await store.dispatch('deleteProduct', productId.value);
-
+                    await store.dispatch('deleteCategory', productId.value);
                     productId.value=0;
+                    // router.push('/');
+                    
                 }
                 catch(e){
                     console.log(e);
                 }
             }
-            const postProduct = async (e) =>{
+            const postCategory= async (e) =>{
                 
                 e.preventDefault();
                 try{
-                    await store.dispatch('postProduct', {
-                        title: title.value,
-                        description: description.value,
-                        price: price.value,
-                        // images: formData,
-                        category_id: category_id.value
-                    });
+                    await store.dispatch('postCategory', {name: title.value});
                     // console.log(file.value);
                     router.push('/');
                 }
@@ -229,18 +182,12 @@ import { useRouter } from 'vue-router';
                 }
             }
 
-            const handleUpdateProduct = async (e) =>{
+            const handleUpdateCategory = async (e) =>{
 
                 e.preventDefault();
-                let form = {
-                        title: title.value,
-                        description: description.value,
-                        price: price.value,
-                        // images: formData,
-                        category_id: category_id.value
-                    };
+                let form = {name: title.value};
                 try{
-                    await store.dispatch('updateProduct', {form , productId : productId.value});
+                    await store.dispatch('updateCategory', { form , postId : productId.value});
                     // console.log(file.value);
                     // router.push('/');
                 }
@@ -249,7 +196,21 @@ import { useRouter } from 'vue-router';
                 }
             }
 
-            return {products,title, productId, description, price, images, category_id, showDelete, showProductDialog, clickPost, clickUpdate,onChangeImg, HideShowDelete, hideShowProductDialog, postProduct, handleDelete, setPostId, handleUpdateProduct};
+            return {
+                        title,
+                        productId,
+                        showDelete, 
+                        showProductDialog, 
+                        clickPost, 
+                        clickUpdate, 
+                        categories,
+                        onChangeImg, 
+                        HideShowDelete, 
+                        hideShowProductDialog, 
+                        handleDelete, 
+                        postCategory,
+                        setPostId, 
+                        handleUpdateCategory};
         }
     }
 </script>

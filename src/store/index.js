@@ -1,5 +1,5 @@
 import { createStore } from 'vuex'
-import { DeleteProduct, Login, Logouts, PostProduct, Register, UpdateProduct } from '../utils/api';
+import { DeleteCategory, DeleteProduct, GetAllCategory, Login, Logouts, PostCategory, PostProduct, Register, UpdateCategory, UpdateProduct } from '../utils/api';
 
 
 const state = {
@@ -78,7 +78,44 @@ const actions={
     catch(e){
       console.log(e);
     }
-  }
+  },
+
+
+  async getAllCategory(context){
+    try{
+      const product = await GetAllCategory();
+    }
+    catch(e){
+      console.log(e);
+    }
+  },
+
+  async postCategory(context, formData){
+    try{
+      const category = await PostCategory(formData);
+    }
+    catch(e){
+      console.log(e);
+    }
+  },
+
+  async updateCategory(context, params){
+    try{
+      const category = await UpdateCategory(params);
+    }
+    catch(e){
+      console.log(e);
+    }
+  },
+
+  async deleteCategory(context, postId){
+    try{
+      const category = await DeleteCategory(postId);
+    }
+    catch(e){
+      console.log(e);
+    }
+  },
 }
 
 const store = createStore({
